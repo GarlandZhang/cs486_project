@@ -11,8 +11,12 @@ from keras.applications.vgg19 import VGG19
 import os
 from PIL import Image
 import cv2
+from os import listdir
+from os.path import isfile, join
+import re
+from tqdm import tqdm
 
-IMG_DIM = 512
+IMG_DIM = 64
 IMG_CHANNELS = 3
 
 content_layers = ['block3_conv3']
@@ -48,3 +52,12 @@ def get_content(image):
     content = content_model.predict(img)
     content = np.ravel(content)
     return content
+
+
+if __name__ == "__main__":
+  res = []
+  for image in tqdm([f for f in listdir('images') if isfile(join('images', f))]):
+    name = re.match("^(.+)\..{3,}$", image).group(1)
+    res.append((name, get_content('images/' + image)))
+
+  np.save("embeddings", res)
