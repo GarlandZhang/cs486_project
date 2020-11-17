@@ -231,5 +231,3 @@ for bs in [16, 64, 256]:
     precision = f1_data['TP']/(f1_data['TP']+f1_data['FP'])
     recall = f1_data['TP'] / (f1_data['FN']+f1_data['TP'])
     print(f'Model bs: {bs} / lr: {lr} / f1: {f1} / pre: {precision} / re: {recall}')
-
-print(f1_list)
